@@ -65,7 +65,6 @@ public class SampleApplicationFallbackSupportIntegrationTest {
 
   @Test
   @KnotxApplyConfiguration("conf/integrationTestsStack.conf")
-  @Disabled("Bug in forms - when using undefined data adapter fallback is not applied")
   public void requestPageWhenFormsProcessingFailsAndFallbackDefined(
       VertxTestContext context, Vertx vertx) {
     knotxServerTester
@@ -76,7 +75,6 @@ public class SampleApplicationFallbackSupportIntegrationTest {
   @Test
   @KnotxApplyConfiguration({"conf/integrationTestsStack.conf",
       "conf/overrides/defaultFallback.conf"})
-  @Disabled("Bug in forms - when using undefined data adapter fallback is not applied")
   public void requestPageWhenFormsProcessingFailsAndGlobalFallbackDefined(
       VertxTestContext context, Vertx vertx) {
     knotxServerTester
@@ -138,6 +136,14 @@ public class SampleApplicationFallbackSupportIntegrationTest {
     knotxServerTester
         .testGetRequest(context, vertx, "/content/local/notExistingTemplateEngine.html",
             "results/pageWithGlobalFallback.html");
+  }
+
+  @Test
+  @KnotxApplyConfiguration("conf/integrationTestsStack.conf")
+  public void requestPageThatUseFormsDatabridgeAndTeAndFallback(
+      VertxTestContext context, Vertx vertx) {
+    knotxServerTester.testGetRequest(context, vertx, "/content/local/notExistingFormsAdapterAndExistingFormsAdapter.html",
+        "results/formsBridgeTeFallback.html");
   }
 
 }
